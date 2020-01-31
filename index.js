@@ -4,8 +4,16 @@ const server = express();
 
 server.use(express.json());
 
+const projects = [
+  {
+    id: "1",
+    title: "Novo projeto",
+    tasks: ["Nova tarefa"],
+  }
+];
+
 server.get('/', (req, res) => {
-  return res.json({ message: 'Hello World' });
+  return res.json(projects);
 })
 
 server.listen(3000);
