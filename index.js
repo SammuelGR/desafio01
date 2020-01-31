@@ -12,7 +12,7 @@ const projects = [
   }
 ];
 
-server.get('/', (req, res) => {
+server.get('/projects', (req, res) => {
   return res.json(projects);
 })
 
