@@ -33,9 +33,20 @@ server.put('/projects/:id', (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
-  projects[id-1].title = title;
+  const project = projects.find(p => p.id == id);
+  project.title = title;
 
   return res.json(projects);
 }); // updates project title
+
+server.delete('/projects/:id', (req, res) => {
+  const { id } = req.params;
+
+  const pIndex = projects.findIndex(p => p.id == id);
+
+  projects.splice(pIndex, 1);
+  
+  return res.send();
+});
 
 server.listen(3000);
