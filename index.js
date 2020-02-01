@@ -12,6 +12,16 @@ const projects = [
   }
 ];
 
+let counter = 0;
+
+server.use((req, res, next) => {
+  counter++;
+
+  next();
+
+  console.log(`Número de requisições: ${counter}`);
+}); // counts the number of requisitions
+
 function checkProjectInArray(req, res, next) {
   const { id } = req.params;
   const project = projects.find(p => p.id == id);
