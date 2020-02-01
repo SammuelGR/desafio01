@@ -12,6 +12,17 @@ const projects = [
   }
 ];
 
+function checkProjectInArray(req, res, next) {
+  const { id } = req.params;
+  const project = projects.find(p => p.id == id);
+
+  if (!project) {
+    return res.status(400).json({ error: 'Project does not exists' });
+  }
+
+  return next();
+} // checks if project exists
+
 server.get('/projects', (req, res) => {
   return res.json(projects);
 }); // lists all projects
@@ -29,7 +40,7 @@ server.post('/projects', (req, res) => {
   return res.json(projects)
 }); // creates new project
 
-server.put('/projects/:id', (req, res) => {
+server.put('/projects/:id', checkProjectInArray, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
@@ -39,7 +50,7 @@ server.put('/projects/:id', (req, res) => {
   return res.json(projects);
 }); // updates project title
 
-server.delete('/projects/:id', (req, res) => {
+server.delete('/projects/:id', checkProjectInArray, (req, res) => {
   const { id } = req.params;
 
   const pIndex = projects.findIndex(p => p.id == id);
@@ -49,7 +60,7 @@ server.delete('/projects/:id', (req, res) => {
   return res.send();
 }); // deletes project
 
-server.post('/projects/:id/tasks', (req, res) => {
+server.post('/projects/:id/tasks', checkProjectInArray, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
